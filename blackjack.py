@@ -71,7 +71,8 @@ def place_bet(players_cash, players_bet):
     return players_cash, players_bet
 
 
-def print_hands(players_hand, dealer_hand, hidden_dealer_card):
+def print_hands(players_hand, dealer_hand):
+    global hidden_dealer_card
     cls()
     for_print = "DEALER CARDS:"
     if hidden_dealer_card:
@@ -106,7 +107,8 @@ def check_player_funds(players_cash):
                 del players_hand[player]
 
 
-def hit_or_stand(deck, players_hand, hidden_dealer_card):
+def hit_or_stand(deck, players_hand):
+    global hidden_dealer_card
     for player in players_hand:
         while True:
             print_hand = ""
@@ -173,11 +175,11 @@ while True:
 
         place_bet(players_cash, players_bet)
 
-        print_hands(players_hand, dealer_hand, hidden_dealer_card)
+        print_hands(players_hand, dealer_hand)
 
-        hit_or_stand(deck, players_hand, hidden_dealer_card)
+        hit_or_stand(deck, players_hand)
 
-        print_hands(players_hand, dealer_hand, hidden_dealer_card)
+        print_hands(players_hand, dealer_hand)
 
         # print(players_hand)
         # print(dealer_hand)
