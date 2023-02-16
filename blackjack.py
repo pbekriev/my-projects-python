@@ -58,7 +58,7 @@ def place_bet(players_cash, players_bet):
     for player in players_cash:
         while True:
             players_bet[player] = input(f"Player {player} place you BET:")
-            if players_cash[player] >= int(players_bet[player]) > 0:
+            if players_bet[player].isdigit() and players_cash[player] >= int(players_bet[player]) > 0:
                 players_bet[player] = int(players_bet[player])
                 break
             elif players_bet[player].isdigit() and players_bet[player] != "0":
@@ -74,19 +74,21 @@ def place_bet(players_cash, players_bet):
 def print_hands(players_hand, dealer_hand):
     global hidden_dealer_card
     cls()
-    for_print = "DEALER CARDS:"
+    for_print = "====================================================" \
+                "\nDEALER CARDS:"
     if hidden_dealer_card:
-        for_print += f"[{dealer_hand[0]}] [**]"
+        for_print += f"[{dealer_hand[0]}][**]"
     else:
         for card in dealer_hand:
-            for_print += f"[{card}] "
+            for_print += f"[{card}]"
     for_print += "\n"
     for player in players_hand:
         for_print += f"Player {player} cards:"
         for card in players_hand[player]:
-            for_print += f"[{card}] "
-        for_print += f"BET:{players_bet[player]}BGN CASH:{players_cash[player]}BGN"
+            for_print += f"[{card}]"
+        for_print += f" BET:{players_bet[player]}BGN CASH:{players_cash[player]}BGN"
         for_print += "\n"
+    for_print += "===================================================="
     return print(for_print)
 
 
@@ -111,11 +113,11 @@ def hit_or_stand(deck, players_hand):
     global hidden_dealer_card
     for player in players_hand:
         while True:
-            print_hand = ""
-            for card in players_hand[player]:
-                print_hand += f"[{card}] "
+            print_hand = [f"[{card}]" for card in players_hand[player]]
+            # for card in players_hand[player]:
+            #     print_hand += f"[{card}] "
             while True:
-                hit_stand = input(f"Player {player} CARDS: {print_hand} [h]it or [s]tand: ")
+                hit_stand = input(f"Player {player} CARDS:{''.join(print_hand)} [h]it or [s]tand: ")
                 if hit_stand in ["h", "s"]:
                     break
                 print(Fore.RED + "Invalid input. Enter 'h' or 's': " + Fore.RESET)
